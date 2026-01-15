@@ -6,16 +6,16 @@
     },
     {
       "name": "text_color",
-      "value": "#182431"
+      "value": "#1A2332"
     },
     {
       "name": "picture_background",
-      "value": "#0D182431"
+      "value": "#E6EBF5"
     },
 
     {
       "name": "page_background",
-      "value": "#F5F5F5"
+      "value": "#F3F6FB"
     },
     {
       "name": "list_item_background",
@@ -23,8 +23,59 @@
     },
     {
       "name": "delete_button",
-      "value": "#FF3B30"
+      "value": "#F04B4B"
+    },
+    {
+      "name": "primary",
+      "value": "#3B6EF5"
+    },
+    {
+      "name": "primary_dark",
+      "value": "#2451D3"
+    },
+    {
+      "name": "primary_soft",
+      "value": "#E9F0FF"
+    },
+    {
+      "name": "success",
+      "value": "#1DBE6B"
+    },
+    {
+      "name": "warning",
+      "value": "#F6A609"
+    },
+    {
+      "name": "info",
+      "value": "#5B8DEF"
+    },
+    {
+      "name": "danger",
+      "value": "#F04B4B"
+    },
+    {
+      "name": "surface",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "surface_alt",
+      "value": "#F8FAFD"
+    },
+    {
+      "name": "border_light",
+      "value": "#E5EAF2"
+    },
+    {
+      "name": "input_background",
+      "value": "#F8FAFF"
+    },
+    {
+      "name": "text_secondary",
+      "value": "#5C6B80"
+    },
+    {
+      "name": "text_muted",
+      "value": "#8B97A7"
     }
   ]
 }
-

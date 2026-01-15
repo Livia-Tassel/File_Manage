@@ -28,56 +28,55 @@ export struct ApplicationFileTab {
 
   build() {
     Column() {
-      // === 新增：文件名输入区域 ===
-      Text('文件名称：')
-        .width($r('app.float.default_294'))
-        .height($r('app.float.default_22'))
-        .fontColor($r('app.color.text_color'))
-        .fontWeight(500)
-        .fontSize($r('app.float.default_16'))
-        .fontFamily('HarmonyHeiTi-Medium')
-        .lineHeight($r('app.float.default_22'))
-        .textAlign(TextAlign.Start)
-        .margin({
-          top: $r('app.float.default_13'),
-          bottom: $r('app.float.default_13'),
-          right: $r('app.float.default_8')
-        })
+      // === 文件名输入区域 ===
+      Column({ space: 10 }) {
+        Text('文件名称')
+          .fontColor($r('app.color.text_secondary'))
+          .fontWeight(500)
+          .fontSize($r('app.float.default_16'))
+          .fontFamily('HarmonyHeiTi-Medium')
+          .textAlign(TextAlign.Start)
 
-      TextInput({ placeholder: '输入文件名（如：myfile.txt）', text: this.fileName })
-        .width($r('app.float.default_336'))
-        .height($r('app.float.default_40'))
-        .borderRadius($r('app.float.default_8'))
-        .backgroundColor($r('app.color.start_window_background'))
-        .padding({ left: 10, right: 10 })
-        .onChange((value: string) => {
-          this.fileName = value;
-        })
-        .margin({ bottom: $r('app.float.default_16') })
+        TextInput({ placeholder: '输入文件名（如：myfile.txt）', text: this.fileName })
+          .height($r('app.float.default_40'))
+          .borderRadius(12)
+          .backgroundColor($r('app.color.input_background'))
+          .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
+          .padding({ left: 12, right: 12 })
+          .onChange((value: string) => {
+            this.fileName = value;
+          })
+      }
+      .width('100%')
+      .padding(16)
+      .backgroundColor($r('app.color.surface'))
+      .borderRadius(16)
+      .shadow({ radius: 18, color: '#12000000', offsetX: 0, offsetY: 8 })
+      .margin({ bottom: 16 })
 
-      Text($r('app.string.textarea_default'))
-        .width($r('app.float.default_294'))
-        .height($r('app.float.default_22'))
-        .fontColor($r('app.color.text_color'))
-        .fontWeight(500)
-        .fontSize($r('app.float.default_16'))
-        .fontFamily('HarmonyHeiTi-Medium')
-        .lineHeight($r('app.float.default_22'))
-        .textAlign(TextAlign.Start)
-        .margin({
-          top: $r('app.float.default_13'),
-          bottom: $r('app.float.default_13'),
-          right: $r('app.float.default_8')
-        })
-      TextArea({ placeholder: '输入文件内容',text: this.content })
-        .width($r('app.float.default_336'))
-        .height($r('app.float.default_139'))
-        .borderRadius($r('app.float.default_24'))
-        .backgroundColor($r('app.color.start_window_background'))
-        .enableKeyboardOnFocus(false)
-        .onChange((value: string) => {
-          this.content = value
-        })
+      Column({ space: 10 }) {
+        Text($r('app.string.textarea_default'))
+          .fontColor($r('app.color.text_secondary'))
+          .fontWeight(500)
+          .fontSize($r('app.float.default_16'))
+          .fontFamily('HarmonyHeiTi-Medium')
+          .textAlign(TextAlign.Start)
+
+        TextArea({ placeholder: '输入文件内容', text: this.content })
+          .height($r('app.float.default_139'))
+          .borderRadius(16)
+          .backgroundColor($r('app.color.input_background'))
+          .border({ width: 1, color: $r('app.color.border_light'), radius: 16 })
+          .enableKeyboardOnFocus(false)
+          .onChange((value: string) => {
+            this.content = value
+          })
+      }
+      .width('100%')
+      .padding(16)
+      .backgroundColor($r('app.color.surface'))
+      .borderRadius(16)
+      .shadow({ radius: 18, color: '#12000000', offsetX: 0, offsetY: 8 })
 
       // Text($r('app.string.file_content'))
       //   .width($r('app.float.default_294'))
@@ -99,8 +98,15 @@ export struct ApplicationFileTab {
 
       Column() {
         Button($r('app.string.button1'))
-          .width($r('app.float.default_312'))
+          .width('100%')
           .height($r('app.float.default_40'))
+          .fontSize($r('app.float.default_16'))
+          .fontWeight(FontWeight.Medium)
+          .backgroundColor($r('app.color.primary'))
+          .fontColor(Color.White)
+          .borderRadius(14)
+          .shadow({ radius: 12, color: '#1A3B6EF5', offsetX: 0, offsetY: 6 })
+          .animation({ duration: 200, curve: Curve.EaseInOut })
           // Write the information and clear the content so that the text box is cleared after you click Save.
           .onClick(() => {
             writeFile(this.content,this.fileName);
@@ -116,8 +122,11 @@ export struct ApplicationFileTab {
         //   })
       }
       .width('100%')
-      .margin({ top: $r('app.float.default_100') })
+      .padding({ left: 16, right: 16 })
+      .margin({ top: 24 })
     }
     .width('100%')
+    .padding({ left: 16, right: 16, top: 12, bottom: 24 })
+    .backgroundColor($r('app.color.page_background'))
   }
 }

@@ -26,23 +26,24 @@ struct HomePage {
     Column() {
       Column() {
         Text($r('app.string.title'))
-          .width($r('app.float.default_312'))
-          .height($r('app.float.default_41'))
+          .width('100%')
           .textAlign(TextAlign.Start)
           .fontSize($r('app.float.default_30'))
           .fontFamily('HarmonyHeiTi-Bold')
           .fontColor($r('app.color.text_color'))
           .lineHeight($r('app.float.default_41'))
           .fontWeight(700)
-          .margin({
-            top: $r('app.float.default_7'),
-            bottom: $r('app.float.default_8'),
-            left: $r('app.float.default_24'),
-            right: $r('app.float.default_24')
-          })
+        Text('文件管理与去重')
+          .fontSize($r('app.float.default_13'))
+          .fontColor($r('app.color.text_muted'))
+          .margin({ top: 2 })
       }
-      .width($r('app.float.default_360'))
-      .height($r('app.float.default_56'))
+      .width('100%')
+      .padding({ top: 12, bottom: 12, left: 24, right: 24 })
+      .backgroundColor($r('app.color.surface'))
+      .borderRadius(16)
+      .shadow({ radius: 16, color: '#14000000', offsetX: 0, offsetY: 6 })
+      .margin({ left: 16, right: 16, bottom: 12 })
 
       Tabs() {
         TabContent() {
@@ -105,10 +106,11 @@ struct HomePage {
       .barWidth($r('app.float.default_360'))
       .barHeight($r('app.float.default_56'))
       .width('100%')
+      .barBackgroundColor($r('app.color.surface'))
     }
-    .backgroundColor($r('app.color.picture_background'))
-    .justifyContent(FlexAlign.Center)
+    .backgroundColor($r('app.color.page_background'))
+    .justifyContent(FlexAlign.Start)
     .width('100%')
-    .padding({ top: $r('app.float.default_48') })
+    .padding({ top: $r('app.float.default_24') })
   }
 }

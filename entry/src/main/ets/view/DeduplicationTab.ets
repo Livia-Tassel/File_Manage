@@ -202,13 +202,13 @@ export struct DeduplicationTab {
   private getChangeStatusColor(group: DuplicateGroup): string {
     switch (group.changeStatus) {
       case 'new':
-        return '#FF9500';
+        return '#F6A609';
       case 'increased':
-        return '#FF3B30';
+        return '#F04B4B';
       case 'decreased':
-        return '#34C759';
+        return '#1DBE6B';
       default:
-        return '#8E8E93';
+        return '#8B97A7';
     }
   }
 
@@ -219,13 +219,13 @@ export struct DeduplicationTab {
         Text('文件去重')
           .fontSize(24)
           .fontWeight(FontWeight.Bold)
-          .fontColor('#333333')
+          .fontColor($r('app.color.text_color'))
           .margin({ bottom: 8 })
 
         Row() {
           Text(`上次扫描: ${this.lastScanTime}`)
             .fontSize(12)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
         }
       }
       .width('100%')
@@ -239,9 +239,10 @@ export struct DeduplicationTab {
           .enabled(!this.isScanning)
           .height(40)
           .fontSize(14)
-          .backgroundColor(this.isScanning ? '#C7C7CC' : '#007AFF')
+          .backgroundColor(this.isScanning ? $r('app.color.border_light') : $r('app.color.primary'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
 
         Button('增量扫描')
@@ -249,9 +250,10 @@ export struct DeduplicationTab {
           .enabled(!this.isScanning && this.lastScanTime !== '从未扫描')
           .height(40)
           .fontSize(14)
-          .backgroundColor((!this.isScanning && this.lastScanTime !== '从未扫描') ? '#34C759' : '#C7C7CC')
+          .backgroundColor((!this.isScanning && this.lastScanTime !== '从未扫描') ? $r('app.color.success') : $r('app.color.border_light'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#141DBE6B', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
 
         Button('一键去重')
@@ -268,10 +270,11 @@ export struct DeduplicationTab {
           .fontSize(14)
           .backgroundColor(
             (!this.isScanning && this.scanResult !== null && this.scanResult.duplicateGroups.length > 0)
-              ? '#FF3B30' : '#C7C7CC'
+              ? $r('app.color.danger') : $r('app.color.border_light')
           )
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#14F04B4B', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
       }
       .width('100%')
@@ -283,12 +286,13 @@ export struct DeduplicationTab {
           .fontSize(14)
           .fontColor('#FFFFFF')
           .backgroundColor(
-            this.messageType === 'success' ? '#34C759' :
-              (this.messageType === 'error' ? '#FF3B30' : '#007AFF')
+            this.messageType === 'success' ? $r('app.color.success') :
+              (this.messageType === 'error' ? $r('app.color.danger') : $r('app.color.primary'))
           )
           .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-          .borderRadius(8)
+          .borderRadius(10)
           .margin({ left: 16, right: 16, bottom: 8 })
+          .animation({ duration: 200, curve: Curve.EaseInOut })
       }
 
       // === 扫描结果统计 ===
@@ -298,10 +302,10 @@ export struct DeduplicationTab {
             Text(`${this.scanResult.scannedFiles}`)
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#007AFF')
+              .fontColor($r('app.color.primary'))
             Text('扫描文件')
               .fontSize(11)
-              .fontColor('#8E8E93')
+              .fontColor($r('app.color.text_muted'))
           }
           .layoutWeight(1)
 
@@ -309,10 +313,10 @@ export struct DeduplicationTab {
             Text(`${this.scanResult.duplicateGroups.length}`)
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#FF9500')
+              .fontColor($r('app.color.warning'))
             Text('重复组')
               .fontSize(11)
-              .fontColor('#8E8E93')
+              .fontColor($r('app.color.text_muted'))
           }
           .layoutWeight(1)
 
@@ -320,10 +324,10 @@ export struct DeduplicationTab {
             Text(`${this.scanResult.totalDuplicates}`)
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#FF3B30')
+              .fontColor($r('app.color.danger'))
             Text('重复文件')
               .fontSize(11)
-              .fontColor('#8E8E93')
+              .fontColor($r('app.color.text_muted'))
           }
           .layoutWeight(1)
 
@@ -331,17 +335,18 @@ export struct DeduplicationTab {
             Text(this.scanResult.totalWasteSizeReadable)
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#34C759')
+              .fontColor($r('app.color.success'))
             Text('可节省')
               .fontSize(11)
-              .fontColor('#8E8E93')
+              .fontColor($r('app.color.text_muted'))
           }
           .layoutWeight(1)
         }
         .width('100%')
         .padding({ left: 16, right: 16, top: 8, bottom: 12 })
-        .backgroundColor('#F8F8F8')
-        .borderRadius(12)
+        .backgroundColor($r('app.color.surface_alt'))
+        .borderRadius(14)
+        .border({ width: 1, color: $r('app.color.border_light') })
         .margin({ left: 16, right: 16, bottom: 12 })
       }
 
@@ -353,7 +358,7 @@ export struct DeduplicationTab {
             .margin({ bottom: 16 })
           Text('点击"全量扫描"开始检测重复文件')
             .fontSize(14)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
         }
         .width('100%')
         .height(200)
@@ -365,7 +370,7 @@ export struct DeduplicationTab {
             .margin({ bottom: 16 })
           Text('太棒了！没有发现重复文件')
             .fontSize(14)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
         }
         .width('100%')
         .height(200)
@@ -376,7 +381,7 @@ export struct DeduplicationTab {
           Row() {
             Text(`📊 本次仅扫描变更文件，共 ${this.scanResult.changedFiles} 个文件有变化`)
               .fontSize(12)
-              .fontColor('#FF9500')
+              .fontColor($r('app.color.warning'))
           }
           .width('100%')
           .padding({ left: 16, right: 16, bottom: 8 })
@@ -393,7 +398,7 @@ export struct DeduplicationTab {
                       Text(`重复组 ${index + 1}`)
                         .fontSize(16)
                         .fontWeight(FontWeight.Bold)
-                        .fontColor('#333333')
+                        .fontColor($r('app.color.text_color'))
 
                       if (group.changeStatus) {
                         Text(this.getChangeStatusText(group))
@@ -408,7 +413,7 @@ export struct DeduplicationTab {
 
                     Text(`${group.files.length} 个重复文件 · 可节省 ${this.formatFileSize(group.wasteSize)}`)
                       .fontSize(12)
-                      .fontColor('#8E8E93')
+                      .fontColor($r('app.color.text_muted'))
                       .margin({ top: 4 })
                   }
                   .alignItems(HorizontalAlign.Start)
@@ -416,7 +421,7 @@ export struct DeduplicationTab {
 
                   Text(this.isGroupExpanded(group.hash) ? '▼' : '▶')
                     .fontSize(14)
-                    .fontColor('#8E8E93')
+                    .fontColor($r('app.color.text_muted'))
                 }
                 .width('100%')
                 .padding(12)
@@ -433,7 +438,7 @@ export struct DeduplicationTab {
                               Text('保留')
                                 .fontSize(10)
                                 .fontColor(Color.White)
-                                .backgroundColor('#34C759')
+                                .backgroundColor($r('app.color.success'))
                                 .padding({ left: 4, right: 4, top: 1, bottom: 1 })
                                 .borderRadius(4)
                                 .margin({ right: 6 })
@@ -443,7 +448,7 @@ export struct DeduplicationTab {
                               Text('新增')
                                 .fontSize(10)
                                 .fontColor(Color.White)
-                                .backgroundColor('#FF9500')
+                                .backgroundColor($r('app.color.warning'))
                                 .padding({ left: 4, right: 4, top: 1, bottom: 1 })
                                 .borderRadius(4)
                                 .margin({ right: 6 })
@@ -451,14 +456,14 @@ export struct DeduplicationTab {
 
                             Text(file.filename)
                               .fontSize(14)
-                              .fontColor('#333333')
+                              .fontColor($r('app.color.text_color'))
                               .maxLines(1)
                               .textOverflow({ overflow: TextOverflow.Ellipsis })
                           }
 
                           Text(`${file.sizeReadable} · ${file.mtimeFormatted}`)
                             .fontSize(11)
-                            .fontColor('#8E8E93')
+                            .fontColor($r('app.color.text_muted'))
                             .margin({ top: 2 })
                         }
                         .alignItems(HorizontalAlign.Start)
@@ -471,7 +476,7 @@ export struct DeduplicationTab {
                             })
                             .height(28)
                             .fontSize(11)
-                            .backgroundColor('#8E8E93')
+                            .backgroundColor($r('app.color.text_muted'))
                             .fontColor(Color.White)
                             .borderRadius(14)
 
@@ -485,7 +490,7 @@ export struct DeduplicationTab {
                               })
                               .height(28)
                               .fontSize(11)
-                              .backgroundColor('#007AFF')
+                              .backgroundColor($r('app.color.primary'))
                               .fontColor(Color.White)
                               .borderRadius(14)
                           }
@@ -493,8 +498,8 @@ export struct DeduplicationTab {
                       }
                       .width('100%')
                       .padding({ left: 12, right: 12, top: 8, bottom: 8 })
-                      .backgroundColor(fileIndex === 0 ? '#E8F5E9' : '#FFF8E1')
-                      .borderRadius(8)
+                      .backgroundColor(fileIndex === 0 ? '#E9F7F0' : '#FFF4E3')
+                      .borderRadius(10)
                     })
 
                     // 快速操作按钮
@@ -508,9 +513,10 @@ export struct DeduplicationTab {
                         })
                         .height(36)
                         .fontSize(13)
-                        .backgroundColor('#FF3B30')
+                        .backgroundColor($r('app.color.danger'))
                         .fontColor(Color.White)
-                        .borderRadius(8)
+                        .borderRadius(10)
+                        .shadow({ radius: 10, color: '#14F04B4B', offsetX: 0, offsetY: 4 })
                         .layoutWeight(1)
                     }
                     .width('100%')
@@ -520,9 +526,10 @@ export struct DeduplicationTab {
                   .padding({ left: 12, right: 12, bottom: 12 })
                 }
               }
-              .backgroundColor(Color.White)
-              .borderRadius(12)
-              .border({ width: 1, color: '#E0E0E0' })
+              .backgroundColor($r('app.color.surface'))
+              .borderRadius(14)
+              .border({ width: 1, color: $r('app.color.border_light') })
+              .shadow({ radius: 12, color: '#0F000000', offsetX: 0, offsetY: 4 })
             }
           })
         }
@@ -546,7 +553,7 @@ export struct DeduplicationTab {
           Text(this.confirmAction === 'dedup_all' ? '确认一键去重' : '确认删除重复文件')
             .fontSize(20)
             .fontWeight(FontWeight.Bold)
-            .fontColor('#333333')
+            .fontColor($r('app.color.text_color'))
             .margin({ bottom: 16 })
 
           Text(
@@ -555,7 +562,7 @@ export struct DeduplicationTab {
               : `即将删除该组中除 "${this.selectedKeepFile}" 以外的所有文件。\n\n删除的文件将移入回收站，可以恢复。`
           )
             .fontSize(14)
-            .fontColor('#666666')
+            .fontColor($r('app.color.text_secondary'))
             .textAlign(TextAlign.Center)
             .margin({ bottom: 24 })
 
@@ -566,9 +573,10 @@ export struct DeduplicationTab {
               })
               .height(44)
               .fontSize(16)
-              .backgroundColor('#E0E0E0')
-              .fontColor('#333333')
-              .borderRadius(8)
+              .backgroundColor($r('app.color.surface_alt'))
+              .fontColor($r('app.color.text_secondary'))
+              .borderRadius(10)
+              .border({ width: 1, color: $r('app.color.border_light') })
               .layoutWeight(1)
 
             Button('确认删除')
@@ -581,17 +589,19 @@ export struct DeduplicationTab {
               })
               .height(44)
               .fontSize(16)
-              .backgroundColor('#FF3B30')
+              .backgroundColor($r('app.color.danger'))
               .fontColor(Color.White)
-              .borderRadius(8)
+              .borderRadius(10)
+              .shadow({ radius: 10, color: '#14F04B4B', offsetX: 0, offsetY: 4 })
               .layoutWeight(1)
           }
           .width('100%')
         }
         .width('85%')
         .padding(24)
-        .backgroundColor(Color.White)
-        .borderRadius(16)
+        .backgroundColor($r('app.color.surface'))
+        .borderRadius(18)
+        .shadow({ radius: 22, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '7.5%', y: '30%' })
       }
 
@@ -612,12 +622,12 @@ export struct DeduplicationTab {
             Text('文件内容')
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#333333')
+              .fontColor($r('app.color.text_color'))
               .layoutWeight(1)
 
             Button('×')
               .fontSize(24)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .backgroundColor(Color.Transparent)
               .onClick(() => {
                 this.showFileContentDialog = false;
@@ -625,17 +635,17 @@ export struct DeduplicationTab {
           }
           .width('100%')
           .padding({ left: 20, right: 20, top: 15, bottom: 15 })
-          .border({ width: { bottom: 1 }, color: '#E0E0E0' })
+          .border({ width: { bottom: 1 }, color: $r('app.color.border_light') })
 
           // 文件名
           Row() {
             Text('文件名:')
               .fontSize(14)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .width('20%')
             Text(this.viewingFileName)
               .fontSize(14)
-              .fontColor('#007AFF')
+              .fontColor($r('app.color.primary'))
               .fontWeight(FontWeight.Medium)
               .maxLines(1)
               .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -648,7 +658,7 @@ export struct DeduplicationTab {
           Scroll() {
             Text(this.viewingFileContent)
               .fontSize(13)
-              .fontColor('#333333')
+              .fontColor($r('app.color.text_color'))
               .fontFamily('monospace')
               .width('100%')
           }
@@ -656,8 +666,9 @@ export struct DeduplicationTab {
           .height(300)
           .padding(16)
           .margin({ left: 20, right: 20, top: 12, bottom: 12 })
-          .backgroundColor('#F8F8F8')
-          .borderRadius(8)
+          .backgroundColor($r('app.color.surface_alt'))
+          .borderRadius(10)
+          .border({ width: 1, color: $r('app.color.border_light') })
 
           // 关闭按钮
           Button('关闭')
@@ -667,20 +678,22 @@ export struct DeduplicationTab {
             .width('90%')
             .height(44)
             .fontSize(16)
-            .backgroundColor('#007AFF')
+            .backgroundColor($r('app.color.primary'))
             .fontColor(Color.White)
-            .borderRadius(10)
+            .borderRadius(12)
+            .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
             .margin({ bottom: 20 })
         }
         .width('90%')
-        .backgroundColor(Color.White)
-        .borderRadius(16)
+        .backgroundColor($r('app.color.surface'))
+        .borderRadius(18)
+        .shadow({ radius: 22, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '5%', y: '10%' })
       }
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F5F5F5')
+    .backgroundColor($r('app.color.page_background'))
   }
 
   // 格式化文件大小

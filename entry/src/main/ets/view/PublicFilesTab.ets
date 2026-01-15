@@ -508,30 +508,36 @@ export struct publicFilesTab {
           .layoutWeight(1)
           .height(40)
           .margin({ right: 10 })
-          .padding({ left: 10, right: 10 })
-          .backgroundColor(Color.White)
-          .border({ width: 1, color: Color.Gray, radius: 8 })
+          .padding({ left: 12, right: 12 })
+          .backgroundColor($r('app.color.input_background'))
+          .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
 
         Button('刷新')
           .onClick(() => {
             this.searchFilesWithInfo();
           })
           .height(40)
-          .backgroundColor('#007AFF')
+          .backgroundColor($r('app.color.primary'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
       }
       .padding({ left: 16, right: 16, top: 12, bottom: 12 })
+      .backgroundColor($r('app.color.surface'))
+      .borderRadius(16)
+      .shadow({ radius: 18, color: '#12000000', offsetX: 0, offsetY: 8 })
+      .margin({ left: 16, right: 16, top: 8, bottom: 12 })
 
       // === 成功提示消息 ===
       if (this.showSaveSuccess) {
         Text(this.saveMessage)
           .fontSize(14)
           .fontColor('#FFFFFF')
-          .backgroundColor('#34C759')
+          .backgroundColor($r('app.color.success'))
           .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-          .borderRadius(8)
-          .margin({ bottom: 12 })
+          .borderRadius(10)
+          .margin({ left: 16, right: 16, bottom: 12 })
+          .animation({ duration: 200, curve: Curve.EaseInOut })
       }
 
       // === 文件列表 ===
@@ -541,7 +547,7 @@ export struct publicFilesTab {
             .fontSize(48)
             .margin({ bottom: 10 })
           Text(this.searchKeyword ? '未找到相关文件' : '暂无文件')
-            .fontColor(Color.Gray)
+            .fontColor($r('app.color.text_muted'))
         }
         .height(200)
         .justifyContent(FlexAlign.Center)
@@ -566,7 +572,7 @@ export struct publicFilesTab {
                   Row() {
                     Text(fileInfo.sizeReadable)
                       .fontSize(11)
-                      .fontColor(Color.Gray)
+                      .fontColor($r('app.color.text_muted'))
                       .margin({ right: 12 })
 
                     // Text(fileInfo.ctimeFormatted)
@@ -585,7 +591,7 @@ export struct publicFilesTab {
                     .fontSize(11)
                     .margin({ right: 4 })
                     .borderRadius(14)
-                    .backgroundColor('#007AFF')
+                    .backgroundColor($r('app.color.primary'))
                     .fontColor(Color.White)
 
                   Button('删除')
@@ -595,14 +601,16 @@ export struct publicFilesTab {
                     .height(28)
                     .fontSize(11)
                     .borderRadius(14)
-                    .backgroundColor($r('app.color.delete_button'))
+                    .backgroundColor($r('app.color.danger'))
                     .fontColor(Color.White)
                 }
               }
               .padding({ left: 12, right: 12, top: 10, bottom: 10 })
-              .backgroundColor(Color.White)
-              .borderRadius(8)
-              .border({ width: 1, color: '#F0F0F0' })
+              .backgroundColor($r('app.color.surface'))
+              .borderRadius(12)
+              .border({ width: 1, color: $r('app.color.border_light') })
+              .shadow({ radius: 12, color: '#0F000000', offsetX: 0, offsetY: 4 })
+              .animation({ duration: 180, curve: Curve.EaseInOut })
             }
           })
         }
@@ -626,12 +634,12 @@ export struct publicFilesTab {
             Text('文件操作')
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#333333')
+              .fontColor($r('app.color.text_color'))
               .layoutWeight(1)
 
             Button('×')
               .fontSize(24)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .backgroundColor(Color.Transparent)
               .onClick(() => {
                 this.closeFileActionPanel();
@@ -639,17 +647,17 @@ export struct publicFilesTab {
           }
           .width('100%')
           .padding({ left: 20, right: 20, top: 15, bottom: 15 })
-          .border({ width: { bottom: 1 }, color: '#E0E0E0' })
+          .border({ width: { bottom: 1 }, color: $r('app.color.border_light') })
 
           Column({ space: 12 }) {
             Row() {
               Text('文件名:')
                 .fontSize(16)
-                .fontColor('#666666')
+                .fontColor($r('app.color.text_secondary'))
                 .width('30%')
               Text(this.selectedFileForPanel)
                 .fontSize(16)
-                .fontColor('#007AFF')
+                .fontColor($r('app.color.primary'))
                 .fontWeight(FontWeight.Bold)
                 .maxLines(1)
                 .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -665,9 +673,10 @@ export struct publicFilesTab {
               .fontSize(18)
               .width('90%')
               .height(50)
-              .backgroundColor('#007AFF')
+              .backgroundColor($r('app.color.primary'))
               .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .borderRadius(12)
+              .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
               .onClick(() => {
                 this.openRenameDialog(this.selectedFileForPanel);
                 this.closeFileActionPanel();
@@ -677,9 +686,10 @@ export struct publicFilesTab {
               .fontSize(18)
               .width('90%')
               .height(50)
-              .backgroundColor('#34C759')
+              .backgroundColor($r('app.color.success'))
               .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .borderRadius(12)
+              .shadow({ radius: 10, color: '#141DBE6B', offsetX: 0, offsetY: 4 })
               .onClick(() => {
                 this.viewFileContent(this.selectedFileForPanel);
                 this.closeFileActionPanel();
@@ -689,9 +699,10 @@ export struct publicFilesTab {
               .fontSize(18)
               .width('90%')
               .height(50)
-              .backgroundColor('#8E8E93')
-              .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .backgroundColor($r('app.color.surface_alt'))
+              .fontColor($r('app.color.text_secondary'))
+              .borderRadius(12)
+              .border({ width: 1, color: $r('app.color.border_light') })
               .onClick(() => {
                 this.closeFileActionPanel();
               })
@@ -701,9 +712,9 @@ export struct publicFilesTab {
           .alignItems(HorizontalAlign.Center)
         }
         .width('85%')
-        .backgroundColor('#FFFFFF')
+        .backgroundColor($r('app.color.surface'))
         .borderRadius(20)
-        .shadow({ radius: 20, color: '#000000', offsetX: 0, offsetY: 0 })
+        .shadow({ radius: 24, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '7.5%', y: '25%' })
         .hitTestBehavior(HitTestMode.None)
       }
@@ -723,12 +734,12 @@ export struct publicFilesTab {
             Text('重命名文件')
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#333333')
+              .fontColor($r('app.color.text_color'))
               .layoutWeight(1)
 
             Button('×')
               .fontSize(24)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .backgroundColor(Color.Transparent)
               .onClick(() => {
                 this.closeRenameDialog();
@@ -736,17 +747,17 @@ export struct publicFilesTab {
           }
           .width('100%')
           .padding({ left: 20, right: 20, top: 15, bottom: 15 })
-          .border({ width: { bottom: 1 }, color: '#E0E0E0' })
+          .border({ width: { bottom: 1 }, color: $r('app.color.border_light') })
 
           Column({ space: 15 }) {
             Row() {
               Text('原文件名:')
                 .fontSize(16)
-                .fontColor('#666666')
+                .fontColor($r('app.color.text_secondary'))
                 .width('30%')
               Text(this.renamingFile)
                 .fontSize(16)
-                .fontColor('#333333')
+                .fontColor($r('app.color.text_color'))
                 .fontWeight(FontWeight.Medium)
                 .maxLines(1)
                 .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -757,7 +768,7 @@ export struct publicFilesTab {
             Row() {
               Text('新文件名:')
                 .fontSize(16)
-                .fontColor('#666666')
+                .fontColor($r('app.color.text_secondary'))
                 .width('30%')
               TextInput({
                 placeholder: '输入新文件名',
@@ -769,7 +780,8 @@ export struct publicFilesTab {
                 .width('70%')
                 .height(40)
                 .padding(10)
-                .border({ width: 1, color: Color.Gray, radius: 8 })
+                .backgroundColor($r('app.color.input_background'))
+                .border({ width: 1, color: $r('app.color.border_light'), radius: 10 })
             }
             .width('100%')
           }
@@ -781,9 +793,10 @@ export struct publicFilesTab {
               .fontSize(16)
               .width('45%')
               .height(45)
-              .backgroundColor('#8E8E93')
-              .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .backgroundColor($r('app.color.surface_alt'))
+              .fontColor($r('app.color.text_secondary'))
+              .borderRadius(12)
+              .border({ width: 1, color: $r('app.color.border_light') })
               .onClick(() => {
                 this.closeRenameDialog();
               })
@@ -792,9 +805,10 @@ export struct publicFilesTab {
               .fontSize(16)
               .width('45%')
               .height(45)
-              .backgroundColor('#007AFF')
+              .backgroundColor($r('app.color.primary'))
               .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .borderRadius(12)
+              .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
               .onClick(() => {
                 this.executeRename();
               })
@@ -803,9 +817,9 @@ export struct publicFilesTab {
           .padding({ left: 20, right: 20, bottom: 20 })
         }
         .width('85%')
-        .backgroundColor('#FFFFFF')
+        .backgroundColor($r('app.color.surface'))
         .borderRadius(20)
-        .shadow({ radius: 20, color: '#000000', offsetX: 0, offsetY: 0 })
+        .shadow({ radius: 24, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '7.5%', y: '30%' })
         .hitTestBehavior(HitTestMode.None)
       }
@@ -825,12 +839,12 @@ export struct publicFilesTab {
             Text('编辑文件内容')
               .fontSize(20)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#333333')
+              .fontColor($r('app.color.text_color'))
               .layoutWeight(1)
 
             Button('×')
               .fontSize(24)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .backgroundColor(Color.Transparent)
               .onClick(() => {
                 this.showFileContent = false;
@@ -838,17 +852,17 @@ export struct publicFilesTab {
           }
           .width('100%')
           .padding({ left: 20, right: 20, top: 15, bottom: 15 })
-          .border({ width: { bottom: 1 }, color: '#E0E0E0' })
+          .border({ width: { bottom: 1 }, color: $r('app.color.border_light') })
 
           Column({ space: 15 }) {
             Row() {
               Text('文件名:')
                 .fontSize(16)
-                .fontColor('#666666')
+                .fontColor($r('app.color.text_secondary'))
                 .width('20%')
               Text(this.selectedFile)
                 .fontSize(16)
-                .fontColor('#007AFF')
+                .fontColor($r('app.color.primary'))
                 .fontWeight(FontWeight.Medium)
                 .maxLines(1)
                 .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -858,7 +872,7 @@ export struct publicFilesTab {
 
             Text('文件内容:')
               .fontSize(16)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
               .width('100%')
               .textAlign(TextAlign.Start)
 
@@ -868,9 +882,9 @@ export struct publicFilesTab {
               })
               .width('100%')
               .height(300)
-              .backgroundColor('#F8F8F8')
+              .backgroundColor($r('app.color.surface_alt'))
               .padding(10)
-              .border({ width: 1, color: '#E0E0E0', radius: 8 })
+              .border({ width: 1, color: $r('app.color.border_light'), radius: 10 })
           }
           .width('100%')
           .padding(20)
@@ -880,9 +894,10 @@ export struct publicFilesTab {
               .fontSize(16)
               .width('45%')
               .height(45)
-              .backgroundColor('#8E8E93')
-              .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .backgroundColor($r('app.color.surface_alt'))
+              .fontColor($r('app.color.text_secondary'))
+              .borderRadius(12)
+              .border({ width: 1, color: $r('app.color.border_light') })
               .onClick(() => {
                 this.showFileContent = false;
               })
@@ -891,9 +906,10 @@ export struct publicFilesTab {
               .fontSize(16)
               .width('45%')
               .height(45)
-              .backgroundColor('#34C759')
+              .backgroundColor($r('app.color.success'))
               .fontColor('#FFFFFF')
-              .borderRadius(10)
+              .borderRadius(12)
+              .shadow({ radius: 10, color: '#141DBE6B', offsetX: 0, offsetY: 4 })
               .onClick(() => {
                 this.updateFileContent();
               })
@@ -902,15 +918,15 @@ export struct publicFilesTab {
           .padding({ left: 20, right: 20, bottom: 20 })
         }
         .width('85%')
-        .backgroundColor('#FFFFFF')
+        .backgroundColor($r('app.color.surface'))
         .borderRadius(20)
-        .shadow({ radius: 20, color: '#000000', offsetX: 0, offsetY: 0 })
+        .shadow({ radius: 24, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '7.5%', y: '15%' })
         .hitTestBehavior(HitTestMode.None)
       }
     }
     .width('100%')
     .layoutWeight(1)
-    .backgroundColor('#F5F5F5')
+    .backgroundColor($r('app.color.page_background'))
   }
 }
