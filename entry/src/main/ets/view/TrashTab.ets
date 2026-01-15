@@ -107,11 +107,11 @@ export struct TrashTab {
   private getSourceColor(source: string): string {
     switch (source) {
       case 'manual':
-        return '#007AFF';
+        return '#3B6EF5';
       case 'dedup':
-        return '#FF9500';
+        return '#F6A609';
       default:
-        return '#8E8E93';
+        return '#8B97A7';
     }
   }
 
@@ -122,12 +122,12 @@ export struct TrashTab {
         Text('回收站')
           .fontSize(24)
           .fontWeight(FontWeight.Bold)
-          .fontColor('#333333')
+          .fontColor($r('app.color.text_color'))
           .margin({ bottom: 4 })
 
         Text(`共 ${this.trashFiles.length} 个文件`)
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
       }
       .width('100%')
       .padding({ left: 16, right: 16, top: 12, bottom: 8 })
@@ -139,9 +139,10 @@ export struct TrashTab {
           .onClick(() => this.loadTrashFiles())
           .height(40)
           .fontSize(14)
-          .backgroundColor('#007AFF')
+          .backgroundColor($r('app.color.primary'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#143B6EF5', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
 
         Button('全部恢复')
@@ -156,9 +157,10 @@ export struct TrashTab {
           .enabled(this.trashFiles.length > 0)
           .height(40)
           .fontSize(14)
-          .backgroundColor(this.trashFiles.length > 0 ? '#34C759' : '#C7C7CC')
+          .backgroundColor(this.trashFiles.length > 0 ? $r('app.color.success') : $r('app.color.border_light'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#141DBE6B', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
 
         Button('清空回收站')
@@ -173,9 +175,10 @@ export struct TrashTab {
           .enabled(this.trashFiles.length > 0)
           .height(40)
           .fontSize(14)
-          .backgroundColor(this.trashFiles.length > 0 ? '#FF3B30' : '#C7C7CC')
+          .backgroundColor(this.trashFiles.length > 0 ? $r('app.color.danger') : $r('app.color.border_light'))
           .fontColor(Color.White)
-          .borderRadius(8)
+          .borderRadius(12)
+          .shadow({ radius: 10, color: '#14F04B4B', offsetX: 0, offsetY: 4 })
           .layoutWeight(1)
       }
       .width('100%')
@@ -187,12 +190,13 @@ export struct TrashTab {
           .fontSize(14)
           .fontColor('#FFFFFF')
           .backgroundColor(
-            this.messageType === 'success' ? '#34C759' :
-              (this.messageType === 'error' ? '#FF3B30' : '#007AFF')
+            this.messageType === 'success' ? $r('app.color.success') :
+              (this.messageType === 'error' ? $r('app.color.danger') : $r('app.color.primary'))
           )
           .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-          .borderRadius(8)
+          .borderRadius(10)
           .margin({ left: 16, right: 16, bottom: 8 })
+          .animation({ duration: 200, curve: Curve.EaseInOut })
       }
 
       // === 文件列表 ===
@@ -203,11 +207,11 @@ export struct TrashTab {
             .margin({ bottom: 16 })
           Text('回收站为空')
             .fontSize(16)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
             .margin({ bottom: 8 })
           Text('删除的文件会暂存在这里，可以随时恢复')
             .fontSize(12)
-            .fontColor('#C7C7CC')
+            .fontColor($r('app.color.text_muted'))
         }
         .width('100%')
         .height(300)
@@ -222,7 +226,7 @@ export struct TrashTab {
                     Text(file.originalName)
                       .fontSize(15)
                       .fontWeight(FontWeight.Medium)
-                      .fontColor('#333333')
+                      .fontColor($r('app.color.text_color'))
                       .maxLines(1)
                       .textOverflow({ overflow: TextOverflow.Ellipsis })
                       .layoutWeight(1)
@@ -240,12 +244,12 @@ export struct TrashTab {
                   Row() {
                     Text(file.sizeReadable)
                       .fontSize(11)
-                      .fontColor('#8E8E93')
+                      .fontColor($r('app.color.text_muted'))
                       .margin({ right: 12 })
 
                     Text(`删除于 ${file.deleteTimeFormatted}`)
                       .fontSize(11)
-                      .fontColor('#8E8E93')
+                      .fontColor($r('app.color.text_muted'))
                   }
                   .margin({ top: 4 })
                 }
@@ -257,9 +261,10 @@ export struct TrashTab {
                     .onClick(() => this.restoreFile(file.trashName))
                     .height(32)
                     .fontSize(12)
-                    .backgroundColor('#34C759')
+                    .backgroundColor($r('app.color.success'))
                     .fontColor(Color.White)
                     .borderRadius(16)
+                    .shadow({ radius: 8, color: '#141DBE6B', offsetX: 0, offsetY: 3 })
 
                   Button('删除')
                     .onClick(() => {
@@ -269,16 +274,18 @@ export struct TrashTab {
                     })
                     .height(32)
                     .fontSize(12)
-                    .backgroundColor('#FF3B30')
+                    .backgroundColor($r('app.color.danger'))
                     .fontColor(Color.White)
                     .borderRadius(16)
+                    .shadow({ radius: 8, color: '#14F04B4B', offsetX: 0, offsetY: 3 })
                 }
               }
               .width('100%')
               .padding(12)
-              .backgroundColor(Color.White)
-              .borderRadius(12)
-              .border({ width: 1, color: '#E0E0E0' })
+              .backgroundColor($r('app.color.surface'))
+              .borderRadius(14)
+              .border({ width: 1, color: $r('app.color.border_light') })
+              .shadow({ radius: 12, color: '#0F000000', offsetX: 0, offsetY: 4 })
             }
           })
         }
@@ -292,7 +299,7 @@ export struct TrashTab {
         Row() {
           Text('💡 提示：回收站中的文件不会永久删除，直到您手动清空回收站')
             .fontSize(11)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
         }
         .width('100%')
         .padding({ left: 16, right: 16, top: 8, bottom: 16 })
@@ -316,7 +323,7 @@ export struct TrashTab {
           )
             .fontSize(20)
             .fontWeight(FontWeight.Bold)
-            .fontColor('#333333')
+            .fontColor($r('app.color.text_color'))
             .margin({ bottom: 16 })
 
           Text(
@@ -327,7 +334,7 @@ export struct TrashTab {
                 : '此文件将被永久删除，无法恢复。')
           )
             .fontSize(14)
-            .fontColor('#666666')
+            .fontColor($r('app.color.text_secondary'))
             .textAlign(TextAlign.Center)
             .margin({ bottom: 24 })
 
@@ -338,9 +345,10 @@ export struct TrashTab {
               })
               .height(44)
               .fontSize(16)
-              .backgroundColor('#E0E0E0')
-              .fontColor('#333333')
-              .borderRadius(8)
+              .backgroundColor($r('app.color.surface_alt'))
+              .fontColor($r('app.color.text_secondary'))
+              .borderRadius(10)
+              .border({ width: 1, color: $r('app.color.border_light') })
               .layoutWeight(1)
 
             Button(this.confirmAction === 'restore_all' ? '确认恢复' : '确认删除')
@@ -359,22 +367,24 @@ export struct TrashTab {
               })
               .height(44)
               .fontSize(16)
-              .backgroundColor(this.confirmAction === 'restore_all' ? '#34C759' : '#FF3B30')
+              .backgroundColor(this.confirmAction === 'restore_all' ? $r('app.color.success') : $r('app.color.danger'))
               .fontColor(Color.White)
-              .borderRadius(8)
+              .borderRadius(10)
+              .shadow({ radius: 10, color: this.confirmAction === 'restore_all' ? '#141DBE6B' : '#14F04B4B', offsetX: 0, offsetY: 4 })
               .layoutWeight(1)
           }
           .width('100%')
         }
         .width('85%')
         .padding(24)
-        .backgroundColor(Color.White)
-        .borderRadius(16)
+        .backgroundColor($r('app.color.surface'))
+        .borderRadius(18)
+        .shadow({ radius: 22, color: '#24000000', offsetX: 0, offsetY: 12 })
         .position({ x: '7.5%', y: '30%' })
       }
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F5F5F5')
+    .backgroundColor($r('app.color.page_background'))
   }
 }

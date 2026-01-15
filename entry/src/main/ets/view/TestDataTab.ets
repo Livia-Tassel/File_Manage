@@ -142,12 +142,12 @@ export struct TestDataTab {
         Text('测试数据生成器')
           .fontSize(24)
           .fontWeight(FontWeight.Bold)
-          .fontColor('#333333')
+          .fontColor($r('app.color.text_color'))
           .margin({ bottom: 4 })
 
         Text(`当前txt文件: ${this.currentTestFileCount} 个`)
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
       }
       .width('100%')
       .padding({ left: 16, right: 16, top: 12, bottom: 8 })
@@ -159,12 +159,13 @@ export struct TestDataTab {
           .fontSize(14)
           .fontColor('#FFFFFF')
           .backgroundColor(
-            this.messageType === 'success' ? '#34C759' :
-              (this.messageType === 'error' ? '#FF3B30' : '#007AFF')
+            this.messageType === 'success' ? $r('app.color.success') :
+              (this.messageType === 'error' ? $r('app.color.danger') : $r('app.color.primary'))
           )
           .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-          .borderRadius(8)
+          .borderRadius(10)
           .margin({ left: 16, right: 16, bottom: 12 })
+          .animation({ duration: 200, curve: Curve.EaseInOut })
       }
 
       // === 配置表单 ===
@@ -173,13 +174,13 @@ export struct TestDataTab {
         Column({ space: 6 }) {
           Text('文件总数量')
             .fontSize(14)
-            .fontColor('#666666')
+            .fontColor($r('app.color.text_secondary'))
           TextInput({ text: this.fileCount, placeholder: '1-1000' })
             .type(InputType.Number)
             .onChange((value: string) => { this.fileCount = value; })
             .height(44)
-            .backgroundColor(Color.White)
-            .border({ width: 1, color: '#E0E0E0', radius: 8 })
+            .backgroundColor($r('app.color.input_background'))
+            .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
             .padding({ left: 12, right: 12 })
         }
         .width('100%')
@@ -189,27 +190,27 @@ export struct TestDataTab {
         Column({ space: 6 }) {
           Text('文件大小范围 (字节)')
             .fontSize(14)
-            .fontColor('#666666')
+            .fontColor($r('app.color.text_secondary'))
           Row({ space: 12 }) {
             TextInput({ text: this.minSize, placeholder: '最小' })
               .type(InputType.Number)
               .onChange((value: string) => { this.minSize = value; })
               .height(44)
-              .backgroundColor(Color.White)
-              .border({ width: 1, color: '#E0E0E0', radius: 8 })
+              .backgroundColor($r('app.color.input_background'))
+              .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
               .padding({ left: 12, right: 12 })
               .layoutWeight(1)
 
             Text('~')
               .fontSize(16)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
 
             TextInput({ text: this.maxSize, placeholder: '最大' })
               .type(InputType.Number)
               .onChange((value: string) => { this.maxSize = value; })
               .height(44)
-              .backgroundColor(Color.White)
-              .border({ width: 1, color: '#E0E0E0', radius: 8 })
+              .backgroundColor($r('app.color.input_background'))
+              .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
               .padding({ left: 12, right: 12 })
               .layoutWeight(1)
           }
@@ -222,27 +223,27 @@ export struct TestDataTab {
         Column({ space: 6 }) {
           Text('重复率范围 (%)')
             .fontSize(14)
-            .fontColor('#666666')
+            .fontColor($r('app.color.text_secondary'))
           Row({ space: 12 }) {
             TextInput({ text: this.minDuplicateRate, placeholder: '最小' })
               .type(InputType.Number)
               .onChange((value: string) => { this.minDuplicateRate = value; })
               .height(44)
-              .backgroundColor(Color.White)
-              .border({ width: 1, color: '#E0E0E0', radius: 8 })
+              .backgroundColor($r('app.color.input_background'))
+              .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
               .padding({ left: 12, right: 12 })
               .layoutWeight(1)
 
             Text('~')
               .fontSize(16)
-              .fontColor('#666666')
+              .fontColor($r('app.color.text_secondary'))
 
             TextInput({ text: this.maxDuplicateRate, placeholder: '最大' })
               .type(InputType.Number)
               .onChange((value: string) => { this.maxDuplicateRate = value; })
               .height(44)
-              .backgroundColor(Color.White)
-              .border({ width: 1, color: '#E0E0E0', radius: 8 })
+              .backgroundColor($r('app.color.input_background'))
+              .border({ width: 1, color: $r('app.color.border_light'), radius: 12 })
               .padding({ left: 12, right: 12 })
               .layoutWeight(1)
           }
@@ -261,9 +262,10 @@ export struct TestDataTab {
           .enabled(!this.isGenerating)
           .height(48)
           .fontSize(16)
-          .backgroundColor(this.isGenerating ? '#C7C7CC' : '#007AFF')
+          .backgroundColor(this.isGenerating ? $r('app.color.border_light') : $r('app.color.primary'))
           .fontColor(Color.White)
-          .borderRadius(10)
+          .borderRadius(12)
+          .shadow({ radius: 12, color: '#143B6EF5', offsetX: 0, offsetY: 6 })
           .layoutWeight(1)
 
         Button('清空所有txt文件')
@@ -271,9 +273,10 @@ export struct TestDataTab {
           .enabled(!this.isGenerating && this.currentTestFileCount > 0)
           .height(48)
           .fontSize(16)
-          .backgroundColor((!this.isGenerating && this.currentTestFileCount > 0) ? '#FF3B30' : '#C7C7CC')
+          .backgroundColor((!this.isGenerating && this.currentTestFileCount > 0) ? $r('app.color.danger') : $r('app.color.border_light'))
           .fontColor(Color.White)
-          .borderRadius(10)
+          .borderRadius(12)
+          .shadow({ radius: 12, color: '#14F04B4B', offsetX: 0, offsetY: 6 })
           .layoutWeight(1)
       }
       .width('100%')
@@ -285,17 +288,17 @@ export struct TestDataTab {
           Text('上次生成结果')
             .fontSize(16)
             .fontWeight(FontWeight.Bold)
-            .fontColor('#333333')
+            .fontColor($r('app.color.text_color'))
 
           Row() {
             Column() {
               Text(`${this.lastResult.totalFiles}`)
                 .fontSize(24)
                 .fontWeight(FontWeight.Bold)
-                .fontColor('#007AFF')
+                .fontColor($r('app.color.primary'))
               Text('总文件数')
                 .fontSize(11)
-                .fontColor('#8E8E93')
+                .fontColor($r('app.color.text_muted'))
             }
             .layoutWeight(1)
 
@@ -303,10 +306,10 @@ export struct TestDataTab {
               Text(`${this.lastResult.uniqueFiles}`)
                 .fontSize(24)
                 .fontWeight(FontWeight.Bold)
-                .fontColor('#34C759')
+                .fontColor($r('app.color.success'))
               Text('唯一文件')
                 .fontSize(11)
-                .fontColor('#8E8E93')
+                .fontColor($r('app.color.text_muted'))
             }
             .layoutWeight(1)
 
@@ -314,10 +317,10 @@ export struct TestDataTab {
               Text(`${this.lastResult.duplicateFiles}`)
                 .fontSize(24)
                 .fontWeight(FontWeight.Bold)
-                .fontColor('#FF9500')
+                .fontColor($r('app.color.warning'))
               Text('重复文件')
                 .fontSize(11)
-                .fontColor('#8E8E93')
+                .fontColor($r('app.color.text_muted'))
             }
             .layoutWeight(1)
 
@@ -325,10 +328,10 @@ export struct TestDataTab {
               Text(`${this.lastResult.duplicateGroups}`)
                 .fontSize(24)
                 .fontWeight(FontWeight.Bold)
-                .fontColor('#FF3B30')
+                .fontColor($r('app.color.danger'))
               Text('重复组')
                 .fontSize(11)
-                .fontColor('#8E8E93')
+                .fontColor($r('app.color.text_muted'))
             }
             .layoutWeight(1)
           }
@@ -336,13 +339,14 @@ export struct TestDataTab {
 
           Text(`总大小: ${this.formatSize(this.lastResult.totalSize)}`)
             .fontSize(12)
-            .fontColor('#8E8E93')
+            .fontColor($r('app.color.text_muted'))
         }
         .width('100%')
         .padding(16)
         .margin({ left: 16, right: 16, top: 24 })
-        .backgroundColor('#F8F8F8')
-        .borderRadius(12)
+        .backgroundColor($r('app.color.surface_alt'))
+        .borderRadius(14)
+        .border({ width: 1, color: $r('app.color.border_light') })
       }
 
       // === 使用说明 ===
@@ -350,33 +354,34 @@ export struct TestDataTab {
         Text('使用说明')
           .fontSize(14)
           .fontWeight(FontWeight.Medium)
-          .fontColor('#333333')
+          .fontColor($r('app.color.text_color'))
 
         Text('1. 设置要生成的文件数量（1-1000）')
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
         Text('2. 设置单个文件的大小范围（字节）')
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
         Text('3. 设置文件重复率范围（实际重复率会在此范围内随机）')
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
         Text('4. 点击"生成测试文件"开始生成')
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
         Text('5. 生成的文件为随机文件名，可在"管理文件"页面查看')
           .fontSize(12)
-          .fontColor('#8E8E93')
+          .fontColor($r('app.color.text_muted'))
       }
       .width('100%')
       .padding(16)
       .margin({ left: 16, right: 16, top: 16 })
-      .backgroundColor('#FFF8E1')
-      .borderRadius(12)
+      .backgroundColor($r('app.color.primary_soft'))
+      .borderRadius(14)
+      .border({ width: 1, color: $r('app.color.border_light') })
       .alignItems(HorizontalAlign.Start)
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F5F5F5')
+    .backgroundColor($r('app.color.page_background'))
   }
 }
