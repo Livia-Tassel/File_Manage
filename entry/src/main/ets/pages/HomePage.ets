@@ -13,102 +13,92 @@
  * limitations under the License.
  */
 
-import { ApplicationFileTab } from '../view/ApplicationFileTab';
-import { publicFilesTab } from '../view/PublicFilesTab';
-import { DeduplicationTab } from '../view/DeduplicationTab';
-import { TrashTab } from '../view/TrashTab';
+import { DocumentLibraryTab } from '../view/DocumentLibraryTab';
+import { AnalysisTab } from '../view/AnalysisTab';
+import { SearchTab } from '../view/SearchTab';
+import { SettingsTab } from '../view/SettingsTab';
 import { TestDataTab } from '../view/TestDataTab';
+
+// 初始化文件变更标志
+AppStorage.setOrCreate('fileChangeFlag', 0);
 
 @Entry
 @Component
 struct HomePage {
+  @State currentIndex: number = 0;
+
   build() {
     Column() {
+      // 标题栏
       Column() {
-        Text($r('app.string.title'))
-          .width($r('app.float.default_312'))
-          .height($r('app.float.default_41'))
+        Text('智能文档助手')
+          .width('100%')
+          .height(41)
           .textAlign(TextAlign.Start)
-          .fontSize($r('app.float.default_30'))
+          .fontSize(24)
           .fontFamily('HarmonyHeiTi-Bold')
-          .fontColor($r('app.color.text_color'))
-          .lineHeight($r('app.float.default_41'))
+          .fontColor('#333333')
           .fontWeight(700)
-          .margin({
-            top: $r('app.float.default_7'),
-            bottom: $r('app.float.default_8'),
-            left: $r('app.float.default_24'),
-            right: $r('app.float.default_24')
-          })
+          .padding({ left: 24 })
       }
-      .width($r('app.float.default_360'))
-      .height($r('app.float.default_56'))
-
-      Tabs() {
-        TabContent() {
-          ApplicationFileTab()
-        }
-        .height('100%')
-        .tabBar(new SubTabBarStyle($r('app.string.bar1'))
-          .indicator({ marginTop: $r('app.float.default_8') })
-          .labelStyle({ font: { size: $r('app.float.default_16') } })
-        )
-
-        TabContent() {
-          Scroll() {
-            publicFilesTab()
-          }
-          .height($r('app.float.default_680'))
-        }
-        .height('100%')
-        .tabBar(new SubTabBarStyle($r('app.string.bar2'))
-          .indicator({marginTop : $r('app.float.default_8')})
-          .labelStyle({font : {size : $r('app.float.default_16')}})
-        )
-
-        TabContent() {
-          Scroll() {
-            DeduplicationTab()
-          }
-          .height($r('app.float.default_680'))
-        }
-        .height('100%')
-        .tabBar(new SubTabBarStyle($r('app.string.bar3'))
-          .indicator({marginTop : $r('app.float.default_8')})
-          .labelStyle({font : {size : $r('app.float.default_16')}})
-        )
-
-        TabContent() {
-          Scroll() {
-            TrashTab()
-          }
-          .height($r('app.float.default_680'))
-        }
-        .height('100%')
-        .tabBar(new SubTabBarStyle($r('app.string.bar4'))
-          .indicator({marginTop : $r('app.float.default_8')})
-          .labelStyle({font : {size : $r('app.float.default_16')}})
-        )
-
-        TabContent() {
-          Scroll() {
-            TestDataTab()
-          }
-          .height($r('app.float.default_680'))
-        }
-        .height('100%')
-        .tabBar(new SubTabBarStyle($r('app.string.bar5'))
-          .indicator({marginTop : $r('app.float.default_8')})
-          .labelStyle({font : {size : $r('app.float.default_16')}})
-        )
-      }
-      .barWidth($r('app.float.default_360'))
-      .barHeight($r('app.float.default_56'))
       .width('100%')
+      .height(56)
+
+      // 主内容区
+      Tabs({ barPosition: BarPosition.End, index: this.currentIndex }) {
+        TabContent() {
+          DocumentLibraryTab()
+        }
+        .tabBar(this.TabBuilder(0, '文档库', $r('sys.media.ohos_ic_public_copy')))
+
+        TabContent() {
+          AnalysisTab()
+        }
+        .tabBar(this.TabBuilder(1, '分析', $r('sys.media.ohos_ic_public_scan')))
+
+        TabContent() {
+          SearchTab()
+        }
+        .tabBar(this.TabBuilder(2, '搜索', $r('sys.media.ohos_ic_public_search_filled')))
+
+        TabContent() {
+          TestDataTab()
+        }
+        .tabBar(this.TabBuilder(3, '测试', $r('sys.media.ohos_ic_public_add')))
+
+        TabContent() {
+          SettingsTab()
+        }
+        .tabBar(this.TabBuilder(4, '设置', $r('sys.media.ohos_ic_public_more')))
+      }
+      .barWidth('100%')
+      .barHeight(56)
+      .width('100%')
+      .layoutWeight(1)
+      .onChange((index: number) => {
+        this.currentIndex = index;
+      })
     }
-    .backgroundColor($r('app.color.picture_background'))
-    .justifyContent(FlexAlign.Center)
+    .backgroundColor('#F5F5F5')
     .width('100%')
-    .padding({ top: $r('app.float.default_48') })
+    .height('100%')
+    .padding({ top: 48 })
+  }
+
+  @Builder
+  TabBuilder(index: number, title: string, icon: Resource) {
+    Column() {
+      Image(icon)
+        .width(24)
+        .height(24)
+        .fillColor(this.currentIndex === index ? '#007AFF' : '#999999')
+      Text(title)
+        .fontSize(10)
+        .fontColor(this.currentIndex === index ? '#007AFF' : '#999999')
+        .margin({ top: 4 })
+    }
+    .width('100%')
+    .height('100%')
+    .justifyContent(FlexAlign.Center)
   }
 }

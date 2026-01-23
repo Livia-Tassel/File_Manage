@@ -123,6 +123,90 @@
     {
       "name": "cancel",
       "value": "取消"
+    },
+    {
+      "name": "tab_library",
+      "value": "文档库"
+    },
+    {
+      "name": "tab_analysis",
+      "value": "智能分析"
+    },
+    {
+      "name": "tab_search",
+      "value": "搜索"
+    },
+    {
+      "name": "tab_settings",
+      "value": "设置"
+    },
+    {
+      "name": "category_meeting",
+      "value": "会议纪要"
+    },
+    {
+      "name": "category_notes",
+      "value": "学习笔记"
+    },
+    {
+      "name": "category_report",
+      "value": "项目报告"
+    },
+    {
+      "name": "category_other",
+      "value": "其他"
+    },
+    {
+      "name": "category_uncategorized",
+      "value": "未分类"
+    },
+    {
+      "name": "start_analysis",
+      "value": "开始分析"
+    },
+    {
+      "name": "analyzing",
+      "value": "分析中..."
+    },
+    {
+      "name": "summary",
+      "value": "摘要"
+    },
+    {
+      "name": "keywords",
+      "value": "关键词"
+    },
+    {
+      "name": "related_docs",
+      "value": "相关文档"
+    },
+    {
+      "name": "api_key_placeholder",
+      "value": "请输入 DeepSeek API Key"
+    },
+    {
+      "name": "save_api_key",
+      "value": "保存 API Key"
+    },
+    {
+      "name": "api_not_configured",
+      "value": "API 未配置"
+    },
+    {
+      "name": "api_configured",
+      "value": "API 已配置"
+    },
+    {
+      "name": "no_documents",
+      "value": "暂无文档"
+    },
+    {
+      "name": "search_docs_placeholder",
+      "value": "输入关键词搜索文档..."
+    },
+    {
+      "name": "no_results",
+      "value": "未找到匹配结果"
     }
   ]
 }

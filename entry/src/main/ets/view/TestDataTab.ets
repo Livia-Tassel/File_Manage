@@ -3,6 +3,7 @@
  */
 
 import { TestDataGenerator, GeneratorConfig, GeneratorResult } from '../common/utils/TestDataGenerator';
+import { common } from '@kit.AbilityKit';
 
 @Component
 export struct TestDataTab {
@@ -21,19 +22,19 @@ export struct TestDataTab {
   @State lastResult: GeneratorResult | null = null;
   @State currentTestFileCount: number = 0;
 
-  private generator: TestDataGenerator | null = null;
+  // 文件变更通知
+  @StorageLink('fileChangeFlag') fileChangeFlag: number = 0;
+
+  private context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext;
+  private generator: TestDataGenerator = TestDataGenerator.getInstance(this.context);
 
   aboutToAppear() {
-    const context = this.getUIContext().getHostContext() as Context;
-    this.generator = TestDataGenerator.getInstance(context);
     this.refreshTestFileCount();
   }
 
   // 刷新测试文件数量
   private refreshTestFileCount() {
-    if (this.generator) {
-      this.currentTestFileCount = this.generator.getTestFileCount();
-    }
+    this.currentTestFileCount = this.generator.getTestFileCount();
   }
 
   // 显示消息
@@ -90,7 +91,7 @@ export struct TestDataTab {
 
   // 执行生成
   private performGenerate() {
-    if (!this.generator || this.isGenerating) return;
+    if (this.isGenerating) return;
 
     const config = this.validateConfig();
     if (!config) return;
@@ -100,32 +101,54 @@ export struct TestDataTab {
 
     // 使用setTimeout让UI有时间更新
     setTimeout(() => {
-      if (this.generator) {
-        const result = this.generator.generateTestFiles(config);
-        this.lastResult = result;
-        this.isGenerating = false;
-        this.refreshTestFileCount();
+      const result = this.generator.generateTestFiles(config);
+      this.lastResult = result;
+      this.isGenerating = false;
+      this.refreshTestFileCount();
+      this.fileChangeFlag++;  // 通知其他页面
 
-        if (result.success) {
-          this.showToast(result.message, 'success');
-        } else {
-          this.showToast(result.message, 'error');
-        }
+      if (result.success) {
+        this.showToast(result.message, 'success');
+      } else {
+        this.showToast(result.message, 'error');
       }
     }, 100);
   }
 
   // 清空测试文件
   private performClear() {
-    if (!this.generator || this.isGenerating) return;
+    if (this.isGenerating) return;
 
     this.isGenerating = true;
     const deletedCount = this.generator.clearTestFiles();
     this.isGenerating = false;
     this.lastResult = null;
     this.refreshTestFileCount();
+    this.fileChangeFlag++;  // 通知其他页面
 
     this.showToast(`已清空 ${deletedCount} 个txt文件`, 'success');
+  }
+
+  // 生成智能文档测试集
+  private performGenerateSmartDocs() {
+    if (this.isGenerating) return;
+
+    this.isGenerating = true;
+    this.showToast('正在生成智能文档测试集...', 'info');
+
+    setTimeout(() => {
+      const result = this.generator.generateSmartDocuments();
+      this.lastResult = result;
+      this.isGenerating = false;
+      this.refreshTestFileCount();
+      this.fileChangeFlag++;  // 通知其他页面
+
+      if (result.success) {
+        this.showToast(result.message, 'success');
+      } else {
+        this.showToast(result.message, 'error');
+      }
+    }, 100);
   }
 
   // 格式化文件大小
@@ -136,8 +159,9 @@ export struct TestDataTab {
   }
 
   build() {
-    Column() {
-      // === 标题 ===
+    Scroll() {
+      Column() {
+        // === 标题 ===
       Column() {
         Text('测试数据生成器')
           .fontSize(24)
@@ -255,26 +279,40 @@ export struct TestDataTab {
       .padding({ left: 16, right: 16 })
 
       // === 操作按钮 ===
-      Row({ space: 12 }) {
-        Button(this.isGenerating ? '生成中...' : '生成测试文件')
-          .onClick(() => this.performGenerate())
+      Column({ space: 12 }) {
+        // 智能文档生成按钮
+        Button('生成智能文档测试集')
+          .onClick(() => this.performGenerateSmartDocs())
           .enabled(!this.isGenerating)
           .height(48)
           .fontSize(16)
-          .backgroundColor(this.isGenerating ? '#C7C7CC' : '#007AFF')
+          .backgroundColor(this.isGenerating ? '#C7C7CC' : '#34C759')
           .fontColor(Color.White)
           .borderRadius(10)
-          .layoutWeight(1)
+          .width('100%')
 
-        Button('清空所有txt文件')
-          .onClick(() => this.performClear())
-          .enabled(!this.isGenerating && this.currentTestFileCount > 0)
-          .height(48)
-          .fontSize(16)
-          .backgroundColor((!this.isGenerating && this.currentTestFileCount > 0) ? '#FF3B30' : '#C7C7CC')
-          .fontColor(Color.White)
-          .borderRadius(10)
-          .layoutWeight(1)
+        Row({ space: 12 }) {
+          Button(this.isGenerating ? '生成中...' : '生成随机测试文件')
+            .onClick(() => this.performGenerate())
+            .enabled(!this.isGenerating)
+            .height(48)
+            .fontSize(16)
+            .backgroundColor(this.isGenerating ? '#C7C7CC' : '#007AFF')
+            .fontColor(Color.White)
+            .borderRadius(10)
+            .layoutWeight(1)
+
+          Button('清空所有txt文件')
+            .onClick(() => this.performClear())
+            .enabled(!this.isGenerating && this.currentTestFileCount > 0)
+            .height(48)
+            .fontSize(16)
+            .backgroundColor((!this.isGenerating && this.currentTestFileCount > 0) ? '#FF3B30' : '#C7C7CC')
+            .fontColor(Color.White)
+            .borderRadius(10)
+            .layoutWeight(1)
+        }
+        .width('100%')
       }
       .width('100%')
       .padding({ left: 16, right: 16, top: 24 })
@@ -374,9 +412,12 @@ export struct TestDataTab {
       .backgroundColor('#FFF8E1')
       .borderRadius(12)
       .alignItems(HorizontalAlign.Start)
+      }
+      .width('100%')
     }
     .width('100%')
     .height('100%')
     .backgroundColor('#F5F5F5')
+    .scrollBar(BarState.Auto)
   }
 }
